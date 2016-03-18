@@ -1,0 +1,103 @@
+293660
+
+http://api.themoviedb.org/3/movie/293660&api_key=714ef2d3b6d377de82359c5fe402354b
+
+
+    private void loadMovieDetails() {
+        DownloadMovieDetailsTask downloadMoviesTask = new DownloadMovieDetailsTask();
+
+        //Have to pass movieId
+        downloadMoviesTask.execute();
+    }
+
+    public class DownloadMovieDetailsTask extends AsyncTask<Integer, Void, MovieID> {
+        @Override
+        protected MovieID doInBackground(Integer... params) {
+            HttpURLConnection urlConnection = null;
+            BufferedReader bufferedReader = null;
+
+            String movieJsonStr = null;
+            try {
+                final String BASE_URI = "http://api.themoviedb.org/3/movie";
+                final String APPID_PARAM = "api_key";
+                final String API_MOVIEID = "id";
+                //Build URI
+                Uri builtUri = Uri.parse(BASE_URI).buildUpon()
+                        .appendQueryParameter(API_MOVIEID, String.valueOf(params[0]))
+                        .appendQueryParameter(APPID_PARAM, BuildConfig.MOVIEDB_API_KEY)
+                        .build();
+                URL url = new URL(builtUri.toString());
+                //  Log.d("MainActivity","BASE URI ="+ BASE_URI);
+                Log.d("DetailActivity", "Built URI =" + builtUri.toString());
+
+                //Create the request to Open themoviedb and open the connection
+                urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setRequestMethod("GET");
+                urlConnection.connect();
+
+                //Read input stream to a string
+                InputStream inputStream = urlConnection.getInputStream();
+                if (inputStream == null) {
+                    //Nothig to do
+                    movieJsonStr = null;
+                }
+                bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                StringBuffer buffer = new StringBuffer();
+                String line;
+                while ((line = bufferedReader.readLine()) != null) {
+                    // Since it's JSON, adding a newline isn't necessary (it won't affect parsing)
+                    // But it does make debugging a *lot* easier if you print out the completed
+                    // buffer for debugging.
+                    buffer.append(line + "\n");
+                }
+
+                if (buffer.length() == 0) {
+                    //stream was empty. no point in parsing
+                    movieJsonStr = null;
+                }
+                movieJsonStr = buffer.toString();
+                Log.v("MainActivFrag", "movieJsonStr : " + movieJsonStr);
+
+            } catch (IOException e) {
+                Log.e("PlaceholderFragment", "Error ", e);
+                // If the code didn't successfully get the weather data, there's no point in attempting
+                // to parse it.
+
+                return null;
+            } finally {
+                if (urlConnection != null) {
+                    urlConnection.disconnect();
+                }
+                if (bufferedReader != null) {
+                    try {
+                        bufferedReader.close();
+                    } catch (final IOException e) {
+                        Log.e("PlaceholderFragment", "Error closing stream", e);
+                    }
+                }
+            }
+            // Parse JSON string
+            try {
+                return parseMovieDetailsFromJson(movieJsonStr);
+            } catch (JSONException e) {
+                Log.d("DetailFrag", "Can't parse JSON: ");
+                return null;
+            }
+        }
+        private MovieID parseMovieDetailsFromJson(String movieJsonStr) throws JSONException {
+            MovieID result;
+
+            JSONObject jsonObject = new JSONObject(movieJsonStr);
+            JSONArray jsonMovieArray = jsonObject.getJSONArray("results");
+            
+            result = MovieID.fromJson(jsonObject);
+            return result;
+        }
+
+        protected void onPostExecute(MovieID movie) {
+            if (movie != null) {
+               // mImageAdapter.addAll(movies);
+            }
+        }
+
+    }//End of asyncTask

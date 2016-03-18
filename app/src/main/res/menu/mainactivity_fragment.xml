@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.android.movies.MainActivity">
+    <item android:id="@+id/sortby"
+        android:title="Sort by"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_action_sort_1"
+        app:showAsAction="always">
+
+        <menu>
+            <group
+
+                android:checkableBehavior="single"
+
+                >
+                <item android:id="@+id/action_relevance"
+                    android:title="Popular"
+                    android:orderInCategory="100"
+                    app:showAsAction="never" />
+
+                <item android:id="@+id/action_rating"
+                    android:title="Rating"
+                    android:orderInCategory="100"
+                    app:showAsAction="never"/>
+            </group>
+        </menu>
+    </item>
+</menu>
+
