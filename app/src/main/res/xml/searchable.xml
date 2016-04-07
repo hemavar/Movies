@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<searchable xmlns:android="http://schemas.android.com/apk/res/android"
+    android:label="@string/app_name"
+    android:hint="@string/search_hint"
+    android:includeInGlobalSearch="true"
+    android:searchSuggestAuthority="com.example.android.movies"
+    android:searchSuggestIntentAction="android.intent.action.VIEW"
+    android:searchSuggestSelection="title LIKE ?"
+    android:searchSuggestThreshold="3"
+    android:searchSuggestIntentData ="content://com.example.android.movies/movie"
+    >
+</searchable>

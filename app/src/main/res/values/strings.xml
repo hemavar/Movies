@@ -12,5 +12,17 @@
 
     <string name="pref_sort_mostpopular">popular</string>
     <string name="pref_sort_highestrated">top_rated</string>
+    <string name="search_hint">Search movies</string>
+    <string name="search_label">search_label</string>
+    <string name="action_search">search_title</string>
+    <string name="title_activity_search">search</string>
 
+    <!-- Shown above search results when we receive a search request. -->
+    <plurals name="search_results">
+        <item quantity="one">%1$d result for \"%2$s\": </item>
+        <item quantity="other">%1$d results for \"%2$s\": </item>
+    </plurals>
+    <!-- Search failure message. -->
+    <string name="no_results">No results found for \"%s\"</string>
+    <string name="SearchResults">SearchResults</string>
 </resources>

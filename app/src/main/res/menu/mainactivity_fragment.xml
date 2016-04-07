@@ -2,30 +2,34 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.android.movies.MainActivity">
+    tools:context="com.example.android.movies.MainActivity"
+    android:background="@android:color/transparent" >
     <item android:id="@+id/sortby"
         android:title="Sort by"
-        android:orderInCategory="100"
         android:icon="@drawable/ic_action_sort_1"
-        app:showAsAction="always">
+        app:showAsAction="ifRoom">
 
         <menu>
+            <!-- menu group -->
             <group
-
                 android:checkableBehavior="single"
-
-                >
+                android:title="Sort by:">
                 <item android:id="@+id/action_relevance"
-                    android:title="Popular"
-                    android:orderInCategory="100"
+                    android:title="Most popular"
                     app:showAsAction="never" />
 
                 <item android:id="@+id/action_rating"
-                    android:title="Rating"
-                    android:orderInCategory="100"
+                    android:title="Top rated"
                     app:showAsAction="never"/>
+
+                <item android:title="Favorites"
+                    app:showAsAction="never"
+                    android:id="@+id/action_favorites"
+                    />
             </group>
+
         </menu>
     </item>
+
 </menu>
 
